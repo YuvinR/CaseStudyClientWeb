@@ -2,11 +2,12 @@ import React from 'react';
 import { Button,Navbar,Nav,NavDropdown,Form,FormControl} from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Home from './Components/Home/home';
+import SideNav from './sideNav'
 function App() {
   return (
     <div className="App">
-
-      <Navbar bg="light" expand="lg">
+      <SideNav />
+      {/* <Navbar bg="light" expand="lg">
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -31,7 +32,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={Home} />
       </Switch>
-      </Router>
+      </Router> */}
      
 
     </div>
