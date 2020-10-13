@@ -16,9 +16,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import {Button} from "@material-ui/core";
 import MailIcon from '@material-ui/icons/Mail';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Home from './Components/Home/home';
+import Dashboard from "./Components/Dashboard/Dashboard" ;
+import PendingRequisitions from "./Components/Pending Requisitions/PendingRequisitions";
+import ViewOrder from "./Components/View Order/ViewOrder";
 
 const drawerWidth = 240;
 
@@ -112,9 +116,15 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          {/*<Typography variant="h6" noWrap>
             Persistent drawer
-          </Typography>
+          </Typography>*/}
+          <Link to={'/Dashboard'}>
+          <Button variant="contained" color="primary" style={{height : "50px"}}>DashBoard</Button>
+          </Link>
+          <Button variant="contained" color="primary" style={{height : "50px"}}>Settings</Button>
+          <Button variant="contained" color="primary" style={{height : "50px"}}>Vendors</Button>
+          <Button variant="contained" color="primary" style={{height : "50px"}}>Reports</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -135,20 +145,56 @@ export default function PersistentDrawerLeft() {
         
 
             {/* ******************Add Covered list for side menu********************** */}
-        <Link to={"/Home"}>
+        <Link to={"/Dashboard"}>
         <List>
             <ListItem  >
-              <ListItemIcon><InboxIcon /> </ListItemIcon>
-              <ListItemText primary={"Home"}  />
+              <ListItemText primary={"Dashboard"}  />
+
             </ListItem>
         </List>
       </Link>
             {/* ****************************************************************************** */}
 
         <Divider />
-        <List>
-         
-        </List>
+
+        <Link to={"/"}>
+          <List>
+            <ListItem  >
+              <ListItemText primary={"Input Vendor Quotations"}  />
+
+            </ListItem>
+          </List>
+        </Link>
+        <Divider/>
+        <Link to={"/"}>
+          <List>
+            <ListItem  >
+              <ListItemText primary={"Vendor Registration"}  />
+
+            </ListItem>
+          </List>
+        </Link>
+        <Divider/>
+
+        <Link to={"/"}>
+          <List>
+            <ListItem  >
+              <ListItemText primary={"Vendor Report"}  />
+
+            </ListItem>
+          </List>
+        </Link>
+        <Divider/>
+
+        <Link to={"/"}>
+          <List>
+            <ListItem  >
+              <ListItemText primary={"Management Committee"}  />
+
+            </ListItem>
+          </List>
+        </Link>
+        <Divider/>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -159,6 +205,9 @@ export default function PersistentDrawerLeft() {
         
           <Switch>
             {/* <Route exact path='/' component={Home} /> */}
+            <Route exact path='/Dashboard' component={Dashboard} />
+            <Route exact path='/PendingRequisitions' component={PendingRequisitions} />
+            <Route exact path='/ViewOrder' component={ViewOrder} />
             <Route exact path='/Home' component={Home} />
           </Switch>
         
