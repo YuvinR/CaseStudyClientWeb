@@ -5,8 +5,64 @@ import {Nav} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import {Modal} from "react-bootstrap";
 import DeclineConfirm from "./DeclineConfirm";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import { FormControl } from '@material-ui/core';
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
 
-export default class DeclineJS extends Component{
+export default function DeclineJS() {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return(
+            <div>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">Alert</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Provide Reason to Decline the Order
+                        </DialogContentText>
+                        <FormControl style={{width : '314px'}}>
+                            <TextField
+                                id="standard-multiline-static"
+                                multiline
+                                rows={4}
+                            />
+                        </FormControl>
+                    </DialogContent>
+
+                    <DialogActions>
+                        <Button onClick={handleClose} variant="contained" color="primary" autoFocus>
+                            Decline
+                        </Button>
+                        <Button onClick={handleClose} color="primary">
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+    );
+}
+
+
+/*export default class DeclineJS extends Component{
 
     constructor(props) {
         super(props);
@@ -21,6 +77,7 @@ export default class DeclineJS extends Component{
         });
 
         return (
+
             <div>
                 <Modal
                     {...this.props}
@@ -63,4 +120,4 @@ export default class DeclineJS extends Component{
             </div>
         );
     }
-}
+}*/

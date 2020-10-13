@@ -125,6 +125,7 @@ export default function PersistentDrawerLeft() {
           <Button variant="contained" color="primary" style={{height : "50px"}}>Settings</Button>
           <Button variant="contained" color="primary" style={{height : "50px"}}>Vendors</Button>
           <Button variant="contained" color="primary" style={{height : "50px"}}>Reports</Button>
+          <Button variant="contained" color="primary" style={{height : "50px" , position : 'absolute', float : 'right' , right : '30px'}}>Logout</Button>
         </Toolbar>
       </AppBar>
       <Drawer

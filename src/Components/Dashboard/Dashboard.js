@@ -8,6 +8,9 @@ import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { Link } from "react-router-dom"
+import Divider from "@material-ui/core/Divider";
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
 
 
 export default function Dashboard(){
@@ -26,10 +29,15 @@ export default function Dashboard(){
                     <Card>
                         <Link to={'/PendingRequisitions'}>
                             <Button size="small" style={{height:'100%' , width: '100%'}}>
-                                    <DonutLargeIcon style={{height:'50px' , width : '50px', }} />
-                                    <Typography>
+                                <CardContent>
+                                    <DonutLargeIcon style={{height:'50px' , width : '50px' }} />
+                                </CardContent>
+
+                                <CardContent>
+                                    <Typography style={{height : "20%" , left : '0' , right : '0' }}>
                                         Pending Requisitions
                                     </Typography>
+                                </CardContent>
                             </Button>
                         </Link>
                     </Card>
@@ -38,13 +46,14 @@ export default function Dashboard(){
                 <div className="SecondCard" style={{"margin":'5px'}}>
                     <Card>
                         <Button size="small" style={{height:'100%' , width: '100%'}}>
-
+                            <CardContent>
                                 <CheckCircleIcon style={{height:'50px' , width : '50px', top :'0' }} />
-
+                            </CardContent>
+                            <CardContent>
                                 <Typography style={{height : "20%" , left : '0' , right : '0' }} >
                                     Approved Requisitions
                                 </Typography>
-
+                            </CardContent>
                         </Button>
                     </Card>
                 </div>
@@ -52,14 +61,14 @@ export default function Dashboard(){
                     <Card>
 
                         <Button size="small" style={{height:'100%' , width: '100%'}} >
-                            <div style={{top :'0' }}>
-                            <CancelIcon style={{height:'50px' , width : '50px' }} />
-                            </div>
-                            <div  style={{height : "20%" , left : '0' , right : '0' }}>
-                                <Typography>
+                            <CardContent>
+                                <CancelIcon style={{height:'50px' , width : '50px' }} />
+                            </CardContent>
+                            <CardContent>
+                                <Typography style={{height : "20%" , left : '0' , right : '0' }} >
                                     Order History
                                 </Typography>
-                            </div>
+                            </CardContent>
                         </Button>
 
                     </Card>
