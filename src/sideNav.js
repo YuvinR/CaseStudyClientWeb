@@ -205,7 +205,7 @@ export default function PersistentDrawerLeft() {
         <div className={classes.drawerHeader} />
         
           <Switch>
-            {/* <Route exact path='/' component={Home} /> */}
+            {/*<Route exact path='/' component={Home} />*/}
             <Route exact path='/Dashboard' component={Dashboard} />
             <Route exact path='/PendingRequisitions' component={PendingRequisitions} />
             <Route exact path='/ViewOrder' component={ViewOrder} />
