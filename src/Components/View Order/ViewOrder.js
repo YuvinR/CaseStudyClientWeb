@@ -23,6 +23,8 @@ import {FormControl} from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
+import TableBody from "@material-ui/core/TableBody";
+import App from "../../App";
 
 export default function ViewOrder(){
 
@@ -32,7 +34,9 @@ export default function ViewOrder(){
 
     const [dConOpen , setdConOpen] = React.useState(false);
 
+    const [items , setItems] = React.useState([]);
 
+    const [orders, setOrders] = React.useState([]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -41,6 +45,7 @@ export default function ViewOrder(){
     const handleClose = () => {
         setOpen(false);
     };
+
 
     const handleDeclineOpen = () => {
         setdOpen(true);
@@ -56,6 +61,81 @@ export default function ViewOrder(){
 
     const handleDecConClose = () =>{
         setdConOpen(false);
+    }
+
+    const approvePopUp = () => {
+        return (
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">Status</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        The Requisitions has been Approved.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+
+                    <Button onClick={handleClose} color="primary" autoFocus>
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
+
+    const declinePopUp = () => {
+
+    }
+
+
+    const renderTableBody = () =>{
+        return items && items.map(({ id, name, quantity, price}) => {
+            return (
+                <TableRow key={id}>
+                    <TableCell>{name}</TableCell>
+                    <TableCell>{quantity}</TableCell>
+                    <TableCell>{price}</TableCell>
+                </TableRow>
+            )
+        })
+    }
+
+    const renderOrderDetails = () => {
+        return orders && orders.map(({ id, site, siteManager,supplier }) => {
+            return (
+                <from>
+                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Order ID : </label>
+                    <label style={{marginLeft: '10px'}}>{id}</label>
+                    <br/>
+                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Site : </label>
+                    <label style={{marginLeft: '10px'}}>{site}</label>
+                    <br/>
+                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Site Manager : </label>
+                    <label style={{marginLeft: '10px'}}>{siteManager}</label>
+                    <br/>
+                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Supplier : </label>
+                    <label style={{marginLeft: '10px'}}>{supplier}</label>
+                    <br/>
+                </from>
+            )
+        })
+    }
+
+    const renderTotalPrice = () => {
+        return orders && orders.map(({id ,totalPrice}) => {
+            return (
+                <div>
+                <form>
+                    <label style={{fontWeight : 'bold' , fontSize : '25px'}}>Total Price : </label>
+                    <label style={{fontWeight : 'bold' , fontSize : '20px'}}>{totalPrice}</label>
+                </form>
+                </div>
+            )
+        })
     }
 
     return (
@@ -76,7 +156,7 @@ export default function ViewOrder(){
                 </AppBar>
             </div>
             <div style={{margin: '10px'}}>
-                <from>
+                {/*<from>
                     <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Order ID : </label>
                     <label style={{marginLeft: '10px'}}>Value of Order ID</label>
                     <br/>
@@ -89,7 +169,8 @@ export default function ViewOrder(){
                     <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Supplier : </label>
                     <label style={{marginLeft: '10px'}}> Value of the Supplier</label>
                     <br/>
-                </from>
+                </from>*/}
+                {renderOrderDetails()}
             </div>
             <div>
                 <TableContainer component={Paper}>
@@ -101,11 +182,18 @@ export default function ViewOrder(){
                                 <TableCell align="center">Price</TableCell>
                             </TableRow>
                         </TableHead>
+                        <TableBody>
+                            {renderTableBody()}
+                        </TableBody>
                     </Table>
                 </TableContainer>
             </div>
-            <div>
-
+            <div style={{marginTop:'10px' , display : 'flex' , justifyContent : 'center'}}>
+                {/*<form>
+                <label style={{fontWeight : 'bold' , fontSize : '25px'}}>Total Price : </label>
+                <label style={{fontWeight : 'bold' , fontSize : '20px'}}>Value Comes to here</label>
+                </form>*/}
+                {renderTotalPrice()}
             </div>
 
             <div style={{margin: '5px', display: 'flex', justifyContent: 'center'}}>
@@ -118,25 +206,7 @@ export default function ViewOrder(){
                 {/*View Order Approved JS*/}
 
                 <div>
-                    <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">Status</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                The Requisitions has been Approved.
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-
-                            <Button onClick={handleClose} color="primary" autoFocus>
-                                Close
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
+                    {approvePopUp()}
                 </div>
 
                 <Button variant="contained"

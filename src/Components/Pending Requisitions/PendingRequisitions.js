@@ -16,6 +16,26 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper';
 
 export default function PendingRequisitions(){
+    const [orders, setOrders] = React.useState([]);
+
+    const getOrderData = async () => {
+
+    }
+
+    const renderTableBody = () => {
+        return orders && orders.map(({ id, site, siteManager, totalPrice,supplier }) => {
+            return (
+                <TableRow key={id}>
+                    <TableCell>{id}</TableCell>
+                    <TableCell>{site}</TableCell>
+                    <TableCell>{siteManager}</TableCell>
+                    <TableCell>{totalPrice}</TableCell>
+                    <TableCell>{supplier}</TableCell>
+                </TableRow>
+            )
+        })
+    }
+
         return(
             <div>
                 <div style={{padding : '0' , margin : '0'}} >
@@ -50,6 +70,9 @@ export default function PendingRequisitions(){
                                     <TableCell align="center">Supplier</TableCell>
                                 </TableRow>
                             </TableHead>
+                            <TableBody>
+                                {renderTableBody()}
+                            </TableBody>
                         </Table>
                     </TableContainer>
                 </div>
