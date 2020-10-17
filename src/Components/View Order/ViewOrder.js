@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -25,9 +25,11 @@ import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import TableBody from "@material-ui/core/TableBody";
 import App from "../../App";
+import {getProductsByOrderNo,changestatus} from '../services'
 
-export default function ViewOrder(){
+export default function ViewOrder(props){
 
+    const{data} = props.location;
     const [open, setOpen] = React.useState(false);
 
     const [dOpen , setdOpen] = React.useState(false);
@@ -38,8 +40,40 @@ export default function ViewOrder(){
 
     const [orders, setOrders] = React.useState([]);
 
+    const [orderDetails, setOrderDetails] = React.useState({
+        orderNo : "",
+        site : "",
+        siteManager:"",
+        supplier:""
+    });
+
+    useEffect(()=>{
+        if(data != undefined || data != null){
+            getProductsByNo( props.location.data.orderNo);
+            setOrderDetails(data);
+        }
+      
+       
+    },[])
+
+    async function getProductsByNo(data){
+        console.log("gg");
+        const result = await getProductsByOrderNo(data);
+        setItems(result)
+    }
+       
+    async function changeOrderStatus(){
+        let data={
+            status:"approved",
+            orderno:orderDetails.orderNo
+        }
+        const result = await changestatus(data);
+        console.log(result);
+    }
+
     const handleClickOpen = () => {
         setOpen(true);
+        changeOrderStatus();
     };
 
     const handleClose = () => {
@@ -96,34 +130,15 @@ export default function ViewOrder(){
         return items && items.map(({ id, name, quantity, price}) => {
             return (
                 <TableRow key={id}>
-                    <TableCell>{name}</TableCell>
-                    <TableCell>{quantity}</TableCell>
-                    <TableCell>{price}</TableCell>
+                    <TableCell align="center">{name}</TableCell>
+                    <TableCell align="center">{quantity}</TableCell>
+                    <TableCell align="center">{price}</TableCell>
                 </TableRow>
             )
         })
     }
 
-    const renderOrderDetails = () => {
-        return orders && orders.map(({ id, site, siteManager,supplier }) => {
-            return (
-                <from>
-                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Order ID : </label>
-                    <label style={{marginLeft: '10px'}}>{id}</label>
-                    <br/>
-                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Site : </label>
-                    <label style={{marginLeft: '10px'}}>{site}</label>
-                    <br/>
-                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Site Manager : </label>
-                    <label style={{marginLeft: '10px'}}>{siteManager}</label>
-                    <br/>
-                    <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Supplier : </label>
-                    <label style={{marginLeft: '10px'}}>{supplier}</label>
-                    <br/>
-                </from>
-            )
-        })
-    }
+   
 
     const renderTotalPrice = () => {
         return orders && orders.map(({id ,totalPrice}) => {
@@ -156,21 +171,21 @@ export default function ViewOrder(){
                 </AppBar>
             </div>
             <div style={{margin: '10px'}}>
-                {/*<from>
+                <from>
                     <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Order ID : </label>
-                    <label style={{marginLeft: '10px'}}>Value of Order ID</label>
+                    <label style={{marginLeft: '10px'}}>{orderDetails.orderNo}</label>
                     <br/>
                     <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Site : </label>
-                    <label style={{marginLeft: '10px'}}> Value of the Site</label>
+                    <label style={{marginLeft: '10px'}}> {orderDetails.site}</label>
                     <br/>
                     <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Site Manager : </label>
-                    <label style={{marginLeft: '10px'}}> Value of the Site Manager</label>
+                    <label style={{marginLeft: '10px'}}>{orderDetails.siteManager}</label>
                     <br/>
                     <label style={{marginBottom: '-10px', fontWeight: 'bold'}}>Supplier : </label>
-                    <label style={{marginLeft: '10px'}}> Value of the Supplier</label>
+                    <label style={{marginLeft: '10px'}}> {orderDetails.supplier}</label>
                     <br/>
-                </from>*/}
-                {renderOrderDetails()}
+                </from>
+                {/* {renderOrderDetails()} */}
             </div>
             <div>
                 <TableContainer component={Paper}>
@@ -193,7 +208,7 @@ export default function ViewOrder(){
                 <label style={{fontWeight : 'bold' , fontSize : '25px'}}>Total Price : </label>
                 <label style={{fontWeight : 'bold' , fontSize : '20px'}}>Value Comes to here</label>
                 </form>*/}
-                {renderTotalPrice()}
+                {/* {renderTotalPrice()} */}
             </div>
 
             <div style={{margin: '5px', display: 'flex', justifyContent: 'center'}}>

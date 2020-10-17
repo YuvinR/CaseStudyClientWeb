@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component,useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -14,23 +14,50 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper';
+import {getorders} from '../services'
+import EditIcon from '@material-ui/icons/Edit';
 
-export default function PendingRequisitions(){
+export default function PendingRequisitions(props){
     const [orders, setOrders] = React.useState([]);
 
     const getOrderData = async () => {
 
     }
 
+    useEffect(()=>{
+        getPendingorders();
+    },[])
+
+     async function getPendingorders(){
+        console.log("gg");
+        const result =  await getorders();
+        setOrders(result)
+    }
+
+    function handleOnClick(e,item){
+        props.history.push({
+            pathname:'ViewOrder',
+            data:item
+        })
+    }
+       
+
     const renderTableBody = () => {
-        return orders && orders.map(({ id, site, siteManager, totalPrice,supplier }) => {
+        return orders && orders.map((item) => {
             return (
-                <TableRow key={id}>
-                    <TableCell>{id}</TableCell>
-                    <TableCell>{site}</TableCell>
-                    <TableCell>{siteManager}</TableCell>
-                    <TableCell>{totalPrice}</TableCell>
-                    <TableCell>{supplier}</TableCell>
+                <TableRow key={item.orderNo}>
+                    <TableCell align="center">{item.orderNo}</TableCell>
+                    <TableCell align="center">{item.site}</TableCell>
+                    <TableCell align="center">{item.siteManager}</TableCell>
+                    <TableCell align="center">{item.totalPrice}</TableCell>
+                    <TableCell align="center">{item.supplier}</TableCell>
+                    <TableCell align="center">
+                    <div class="font-icon-wrapper" onClick={(e) => handleOnClick(e,item)}>
+                        <IconButton color="primary" aria-label="add to shopping cart">
+                            <EditIcon />
+                        </IconButton>
+                    </div>
+                    </TableCell>
                 </TableRow>
             )
         })
@@ -63,11 +90,12 @@ export default function PendingRequisitions(){
                         <Table  aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center">Order ID</TableCell>
+                                    <TableCell align="center">Order No</TableCell>
                                     <TableCell align="center">Site</TableCell>
                                     <TableCell align="center">Site Manager</TableCell>
                                     <TableCell align="center">Total Price</TableCell>
                                     <TableCell align="center">Supplier</TableCell>
+                                    <TableCell align="center">View</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
