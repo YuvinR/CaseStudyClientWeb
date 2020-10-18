@@ -57,24 +57,27 @@ export default function ViewOrder(props){
     },[])
 
     async function getProductsByNo(data){
-        console.log("gg");
+      
         const result = await getProductsByOrderNo(data);
         setItems(result)
     }
        
-    async function changeOrderStatus(){
+    async function changeOrderStatus(val){
         let data={
-            status:"approved",
+            status:val,
             orderno:orderDetails.orderNo
         }
         const result = await changestatus(data);
-        console.log(result);
+        
     }
 
     const handleClickOpen = () => {
         setOpen(true);
-        changeOrderStatus();
+        const val = "approved";
+        changeOrderStatus(val);
     };
+
+   
 
     const handleClose = () => {
         setOpen(false);
@@ -90,7 +93,11 @@ export default function ViewOrder(props){
     }
 
     const handleDecConOpen = () => {
+        console.log("ff");
         setdConOpen(true);
+
+        const val = "declined";
+        changeOrderStatus(val);
     }
 
     const handleDecConClose = () =>{
