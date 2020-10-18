@@ -20,3 +20,9 @@ export async function changestatus(updatemodel){
 
     return result.data;
 }
+
+export async function validate(loginmodel){
+    const result =  await CommonPost('validate',loginmodel);
+
+    return result.data;
+}

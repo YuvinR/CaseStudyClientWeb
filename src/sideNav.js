@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -23,7 +23,9 @@ import Home from './Components/Home/home';
 import Dashboard from "./Components/Dashboard/Dashboard" ;
 import PendingRequisitions from "./Components/Pending Requisitions/PendingRequisitions";
 import ViewOrder from "./Components/View Order/ViewOrder";
+import Loader from "./Utils/SpinnerLoader"
 
+import Login from "./Components/Login/Login";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -87,6 +89,7 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const[barhide,setBarhide]= React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,11 +99,28 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
+  useEffect(()=>{
+    if(sessionStorage.getItem('isLogin')=="" || sessionStorage.getItem('isLogin')==null || sessionStorage.getItem('isLogin') != "true" || sessionStorage.getItem('isLogin')==undefined ){
+      setBarhide(true);
+    
+  }else{
+    setBarhide(false);
+      
+  }
+  },[])
+
+  async function handleOnClick(e){
+   
+    sessionStorage.setItem("isLogin","");
+  }
+
   return (
     <Router>
-    <div className={classes.root}>
+
+    <div className={classes.root} >
       <CssBaseline />
       <AppBar
+        hidden={barhide}
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -125,10 +145,11 @@ export default function PersistentDrawerLeft() {
           <Button variant="contained" color="primary" style={{height : "50px"}}>Settings</Button>
           <Button variant="contained" color="primary" style={{height : "50px"}}>Vendors</Button>
           <Button variant="contained" color="primary" style={{height : "50px"}}>Reports</Button>
-          <Button variant="contained" color="primary" style={{height : "50px" , position : 'absolute', float : 'right' , right : '30px'}}>Logout</Button>
+          <Link to={'/'}><Button variant="contained" color="primary" onClick={(e) => handleOnClick(e)} style={{height : "50px" , position : 'absolute', float : 'right' , right : '30px',marginTop:'-25px'}}>Logout</Button></Link>
         </Toolbar>
       </AppBar>
       <Drawer
+        
         className={classes.drawer}
         variant="persistent"
         anchor="left"
@@ -205,11 +226,12 @@ export default function PersistentDrawerLeft() {
         <div className={classes.drawerHeader} />
         
           <Switch>
-            {/*<Route exact path='/' component={Home} />*/}
+            <Route exact path='/' component={Loader} />
             <Route exact path='/Dashboard' component={Dashboard} />
             <Route exact path='/PendingRequisitions' component={PendingRequisitions} />
             <Route exact path='/ViewOrder' component={ViewOrder} />
             <Route exact path='/Home' component={Home} />
+            <Route exact path='/login' component={Login} />
           </Switch>
         
       </main>

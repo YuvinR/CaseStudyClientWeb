@@ -23,6 +23,11 @@ export default function PendingRequisitions(props){
     const getOrderData = async () => {
 
     }
+    useEffect(()=>{
+        if(sessionStorage.getItem('isLogin')=="" || sessionStorage.getItem('isLogin')==null || sessionStorage.getItem('isLogin') != "true" || sessionStorage.getItem('isLogin')==undefined ){
+            props.history.push('/');
+        }
+    },[])
 
     useEffect(()=>{
         getPendingorders();
